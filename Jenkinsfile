@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    def scmVars
     tools
     {
         maven 'M3'
@@ -22,6 +21,7 @@ pipeline {
     }
 
     stages {
+        def scmVars
         stage('Sequential Setup Steps') {
             stages {
                 stage ('Checkout') {
