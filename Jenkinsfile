@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    def scmVars
     tools
     {
         maven 'M3'
@@ -26,7 +27,7 @@ pipeline {
                 stage ('Checkout') {
                     steps {
                         script {
-                            checkout scm
+                            scmVars = checkout scm
                         }
                     }
                 }
@@ -37,7 +38,7 @@ pipeline {
             steps {
                 script {
                     bat 'echo "Branch name" + %env.GIT_BRANCH%'
-                    echo env
+                    echo scmVars.GIT_BRANCH
                 }
             }
         }
