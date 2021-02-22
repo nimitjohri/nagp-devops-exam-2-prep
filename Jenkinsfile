@@ -36,7 +36,8 @@ pipeline {
         stage('check branch name') {
             steps {
                 script {
-                    bat 'echo "Branch name" + %env.BRANCH_NAME%'
+                    bat 'echo "Branch name" + %env.GIT_BRANCH%'
+                    echo env
                 }
             }
         }
