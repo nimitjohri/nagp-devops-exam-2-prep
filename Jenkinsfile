@@ -1,3 +1,4 @@
+def scmVars
 pipeline {
     agent any
     tools
