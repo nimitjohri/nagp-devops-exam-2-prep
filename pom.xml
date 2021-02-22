@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>nagp-devops-exec</artifactId>
+	<artifactId>nagp-devops-exam-2-dev</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>nagp-devops-exec</name>
+	<name>nagp-devops-exam-2-dev</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

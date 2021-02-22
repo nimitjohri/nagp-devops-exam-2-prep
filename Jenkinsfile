@@ -25,47 +25,27 @@ pipeline {
             stages {
                 stage ('Checkout') {
                     steps {
-                        // deleteDir()
-                        // dir(env.BUILD_DIR) {
-                            script {
-                                checkout scm
-                            }
-                        // }
-                    }
-                }
-
-                stage ('Stash') {
-                    steps {
-                        stash includes: '**', name: 'source', useDefaultExcludes: false
+                        script {
+                            checkout scm
+                        }
                     }
                 }
             }
-            // post {
-            //     cleanup { deleteDir() }
-            // }
         }
 
         stage ('Build') {
             steps {
-                // deleteDir()
-                // unstash 'source'
-                // dir(env.BUILD_DIR) {
-                    script {
-                        bat 'mvn clean install'
-                    }
-                // }
+                script {
+                    bat 'mvn clean install'
+                }
             }
         }
 
         stage ('Unit Testing') {
             steps {
-                // deleteDir()
-                // unstash 'source'
-                // dir(env.BUILD_DIR) {
-                    script {
-                        bat 'mvn test'
-                    }
-                // }
+                script {
+                    bat 'mvn test'
+                }
             }
         }
 
@@ -79,16 +59,16 @@ pipeline {
         stage ('Upload to Artifactory') {
             steps {
                 rtMavenDeployer(
-                    id: 'deployer',
+                    id: 'dev-deployer',
                     serverId: 'artifactory 6.20',
-                    releaseRepo: 'nagp-devops',
-                    snapshotRepo: 'nagp-devops'
+                    releaseRepo: 'nagp-devops-exam-2-dev',
+                    snapshotRepo: 'nagp-devops-exam-2-dev'
                 )
 
                 rtMavenRun(
                     pom: 'pom.xml',
                     goals: 'clean install',
-                    deployerId: 'deployer'
+                    deployerId: 'dev-deployer'
                 )
 
                 rtPublishBuildInfo(
@@ -102,7 +82,7 @@ pipeline {
                 withDockerServer([uri:'tcp://localhost:2375', credentialsId: env.DOCKER_CREDENTIALS_ID]) {
                     withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS_ID, url: "https://docker.io/"]) {
                         bat 'docker login -u nimit07 -p Human@123'
-                        bat 'docker build -t nimit07/nagpdevops:%BUILD_NUMBER% --no-cache -f Dockerfile .'
+                        bat 'docker build -t nimit07/nagp-devops-dev:%BUILD_NUMBER% --no-cache -f Dockerfile .'
                     }
                 }
             }
@@ -117,20 +97,20 @@ pipeline {
         stage ('Stopping running container') {
             steps {
                 bat '''
-                for /f %%i in ('docker ps -aqf "name=^nagpdevops"') do set containerId=%%i
+                for /f %%i in ('docker ps -aqf "name=^nagp-devops-dev"') do set containerId=%%i
                 echo %containerId%
                 If "%containerId%" == "" (
                 echo "No Container running"
                 ) ELSE (
-                docker stop %ContainerId%
-                docker rm -f %ContainerId%
+                docker stop %containerId%
+                docker rm -f %containerId%
                 )'''
             }
         }
 
         stage ('Docker deployment') {
             steps {
-                bat 'docker run --name nagpdevops -d -p 7000:3000 -p 8080:8080 nimit07/nagpdevops:%BUILD_NUMBER%'
+                bat 'docker run --name nagp-devops-dev -d -p 6200:8080 nimit07/nagpdevops:%BUILD_NUMBER%'
             }
         }
     }

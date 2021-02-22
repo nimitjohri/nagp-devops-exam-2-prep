@@ -1,5 +1,4 @@
 FROM tomcat:alpine
-RUN wget -O /usr/local/tomcat/webapps/launchstation04.war http://192.168.43.253:8081/artifactory/nagp-devops/com/example/nagp-devops-exec/0.0.1-SNAPSHOT/nagp-devops-exec-0.0.1-SNAPSHOT.war
-EXPOSE 3000
+RUN wget -O /usr/local/tomcat/webapps/nimitjohri.war http://192.168.1.7:8081/artifactory/nagp-devops/com/example/nagp-devops-exam-2-dev/0.0.1-SNAPSHOT/nagp-devops-exam-2-dev-0.0.1-SNAPSHOT.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
