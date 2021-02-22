@@ -110,7 +110,7 @@ pipeline {
 
         stage ('Docker deployment') {
             steps {
-                bat 'docker run --name nagp-devops-dev -d -p 6200:8080 nimit07/nagpdevops:%BUILD_NUMBER%'
+                bat 'docker run --name nagp-devops-dev -d -p 6200:8080 nimit07/nagp-devops-dev:%BUILD_NUMBER%'
             }
         }
     }
