@@ -90,7 +90,7 @@ pipeline {
 
         stage ('Push To DTR') {
             steps {
-                bat 'docker push nimit07/nagpdevops:%BUILD_NUMBER%'
+                bat 'docker push nimit07/nagp-devops-dev:%BUILD_NUMBER%'
             }
         }
 
