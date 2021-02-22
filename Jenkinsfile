@@ -21,13 +21,13 @@ pipeline {
     }
 
     stages {
-        def scmVars
         stage('Sequential Setup Steps') {
             stages {
                 stage ('Checkout') {
                     steps {
                         script {
                             scmVars = checkout scm
+                            echo scmVars.GIT_BRANCH
                         }
                     }
                 }
