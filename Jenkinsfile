@@ -130,5 +130,24 @@ pipeline {
         always {
             junit 'target/surefire-reports/*.xml'
         }
+        failure {
+         script {
+               stage ('Send Email (Failure)') {
+                     emailext(
+                           recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                           to: emailRecipients.join(', '),
+                           subject: "Build failed in Jenkins: ${JOB_NAME} ${BUILD_DISPLAY_NAME}",
+                           attachLog: true,
+                           body: """
+                              <html>
+                              <body>
+                              <p>Check console output <a href='${BUILD_URL}console'>here</a>.</p>
+                              </body>
+                              </html>
+                           """
+                     )
+                  }
+               }
+            }
     }
 }
