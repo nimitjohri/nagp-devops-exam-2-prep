@@ -1,3 +1,5 @@
+private static final List<String> emailRecipients = ['nimitjohri5@gmail.com', 'heenam.66@gmail.com']
+
 def scmVars
 pipeline {
     agent any
