@@ -138,12 +138,12 @@ pipeline {
                      emailext(
                            recipientProviders: [[$class: 'CulpritsRecipientProvider']],
                            to: emailRecipients.join(', '),
-                           subject: "Build failed in Jenkins: ${JOB_NAME} ${BUILD_DISPLAY_NAME}",
+                           subject: "Build failed in Jenkins: ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}",
                            attachLog: true,
                            body: """
                               <html>
                               <body>
-                              <p>Check console output <a href='${BUILD_URL}console'>here</a>.</p>
+                              <p>Check console output <a href='${env.BUILD_URL}console'>here</a>.</p>
                               </body>
                               </html>
                            """
@@ -157,12 +157,12 @@ pipeline {
                      emailext(
                            recipientProviders: [[$class: 'CulpritsRecipientProvider']],
                            to: emailRecipients.join(', '),
-                           subject: "Build failed in Jenkins: ${JOB_NAME} ${BUILD_DISPLAY_NAME}",
+                           subject: "Build failed in Jenkins: ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}",
                            attachLog: true,
                            body: """
                               <html>
                               <body>
-                              <p>Check console output <a href='${BUILD_URL}console'>here</a>.</p>
+                              <p>Check console output <a href='${env.BUILD_URL}console'>here</a>.</p>
                               </body>
                               </html>
                            """
