@@ -153,20 +153,21 @@ pipeline {
             }
         success {
          script {
-               stage ('Send Email (Failure)') {
-                     emailext(
-                           recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-                           to: emailRecipients.join(', '),
-                           subject: "Build failed in Jenkins: ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}",
-                           attachLog: true,
-                           body: """
-                              <html>
-                              <body>
-                              <p>Check console output <a href='${env.BUILD_URL}console'>here</a>.</p>
-                              </body>
-                              </html>
-                           """
-                     )
+               stage ('Send Email (Success)') {
+                    mail bcc: '', body: "<b>Example</b><br>\n<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "nimit.johri@nagarro.com";
+                    //  emailext(
+                    //        recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                    //        to: emailRecipients.join(', '),
+                    //        subject: "Build failed in Jenkins: ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}",
+                    //        attachLog: true,
+                    //        body: """
+                    //           <html>
+                    //           <body>
+                    //           <p>Check console output <a href='${env.BUILD_URL}console'>here</a>.</p>
+                    //           </body>
+                    //           </html>
+                    //        """
+                    //  )
                   }
                }
             }
